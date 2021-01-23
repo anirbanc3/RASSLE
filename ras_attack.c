@@ -157,7 +157,7 @@ int main(int argc, char *argv[])	{
 		for (j=0; j < 20; j++)
 			longnop();
 		uint64_t start = rdtsc_begin();
-		z = getC11();
+		z = getC14();
 		uint64_t end = rdtsc_end(); 
 		printf("%lu\n",(end - start));
 		if (i > 80 && i < 160)
