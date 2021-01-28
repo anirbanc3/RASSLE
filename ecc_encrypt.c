@@ -63,7 +63,7 @@ int main(int argc, char* argv[])	{
 	int i;
 	char key[100];
 	strcpy(key, argv[1]);
-//	strcat(key, "472D4B6150645367566B59703373367639792442264528482B4D6251655468");
+	strcat(key, "472D4B6150645367566B59703373367639792442264528482B4D6251655468");
 
 	for (i=0; i< 5; i++)	{
 		longnop();
