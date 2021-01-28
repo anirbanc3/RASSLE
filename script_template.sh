@@ -1,6 +1,6 @@
 #!/bin/bash
 
-gcc -o ras2 trial_2.c -w
+gcc -o ras2 ras_attack.c -w
 gcc -o ecc ecc_encrypt.c -w -lcrypto
 
 dec=128
