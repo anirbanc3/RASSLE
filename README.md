@@ -22,7 +22,7 @@ The demo requires OpenSSL library to be installed in the system.
 
 Most Linux-based operating systems offer a number of scheduling policies, which are crucial artifacts for controlling two asynchronous processes' execution. Among the available policies, the deadline scheduler is particularly interesting because it imposes a "deadline" on operations to prevent starvation of processes. In the deadline scheduler, each request by a process to access a system resource has an expiration time. A process holding a system resource does not need to be forcefully preempted, as the deadline scheduler automatically preempts it from the CPU after its request expiration time.
 
-In order to inspect the underline scheduler in the working system one can use `cat~/sys/block/sda/queue/scheduler`.
+In order to inspect the underline scheduler in the working system one can use `cat /sys/block/sda/queue/scheduler`.
 The operation of deadline scheduler depends on three parameters, namely 'runtime', 'period', and 'deadline'. These parameters can be adjusted using `chrt` command, which can be executed from user-level privilege by acquiring `CAP_SYS_NICE` permission. The permission can be provided to a user using `setcap cap_sys_nice+ep /usr/bin/chrt`.
 The command to run an \texttt{<executable>} using deadline scheduler is as follows:
   `chrt -d --sched-runtime t1 --sched-deadline t2 --sched-period t3 0 <executable>`
