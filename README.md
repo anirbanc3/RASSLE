@@ -40,5 +40,6 @@ The attack works in two phases - template building and template matching
 ### Template Matching
 
 1. Open `ecc_encrypt.c` in a text editor. Comment out line 66. During template building phase, we varied the 6 msbs while keeping the remaining bits same. But, during the matching phase, the nonces are generated at random. So all the 256 bits of the nonce are used as input in this case.
-2. Run the shell script `script_nonce.sh` to generate the datasets containing timing values obtained through RASSLE. The script reads from a file containing random nonces and perform
-3. 
+2. Run the shell script `script_nonce.sh` to generate the datasets containing timing values obtained through RASSLE. The script reads from a file containing random nonces and performs EC scalar multiplication using those nonces. 
+3. Once the above script ends, run `template_matching.py` to retrieve the candidate "partial nonces" using Least Square Error method. The python script will also print the number of nonces correctly predicted.
+4. Using these "partial nonces", the original secret signing key can be revealed using the well-known Lattice Attack.
