@@ -75,8 +75,6 @@ with open('sample_nonces.txt', 'r') as f:
     
 nonces = list(map(lambda each:each.strip("\n"), file))
 
-#mont_start_time = 4335541507554953
-
 sample_timing = [] 
 for i in range(500):
     filename = 'RASSLE/filetiming_tst_'+str(i + 100)+'.txt'
@@ -116,7 +114,6 @@ for i in range(500):
         outlist.append((j, p))
 
 
-#    outlist = sorted(outlist,key=itemgetter(1),  reverse=True)
     outlist = sorted(outlist,key=itemgetter(1))
     key_holder.append(outlist[0:5])
     
