@@ -24,7 +24,7 @@ Most Linux-based operating systems offer a number of scheduling policies, which 
 
 In order to inspect the underline scheduler in the working system one can use `cat /sys/block/sda/queue/scheduler`.
 The operation of deadline scheduler depends on three parameters, namely 'runtime', 'period', and 'deadline'. These parameters can be adjusted using `chrt` command, which can be executed from user-level privilege by acquiring `CAP_SYS_NICE` permission. The permission can be provided to a user using `setcap cap_sys_nice+ep /usr/bin/chrt`.
-The command to run an \texttt{<executable>} using deadline scheduler is as follows:
+The command to run an `<executable>` using deadline scheduler is as follows:
   `chrt -d --sched-runtime t1 --sched-deadline t2 --sched-period t3 0 <executable>`
 We set t1 with the obtained value in nanoseconds. Further, we set the parameter sched-deadline to a value t2 = t1 + δ such that the ECC process leaves the CPU after execution of a single Montgomery ladder iteration. We set the parameter sched-period to a value t3 = 2 × t1. 
 
