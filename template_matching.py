@@ -138,7 +138,7 @@ for i, keys in enumerate(key_holder):
         nonce_candidates[i][j] = key_bin_pair[item[0]]
 
 
-with open("nonce_bits_run_7.csv", "w", newline="") as f:
+with open("nonce_bits.csv", "w", newline="") as f:
     writer = csv.writer(f)
     writer.writerows(nonce_candidates)  
         
