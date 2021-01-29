@@ -143,11 +143,11 @@ int main(int argc, char *argv[])	{
 	int z = 0; 
 
 	char filename[100];
-    strcpy(filename, "filetiming_");
+    	strcpy(filename, "filetiming_");
 	strcat(filename, argv[1]);
 	strcat(filename, "_");
-    strcat(filename, argv[2]);
-    strcat(filename, ".txt");
+    	strcat(filename, argv[2]);
+    	strcat(filename, ".txt");
 	
 	FILE *fp = fopen(filename,"w");
 
