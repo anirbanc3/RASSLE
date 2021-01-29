@@ -34,12 +34,13 @@ The attack works in two phases - template building and template matching
 
 ### Template Building
 
-1. Run the shell script `script_template.sh` to build the templates. In our experiments, we consider the most significant bit (msb) to be 1 and build templates for 6 msbs. Therefore total number of templates built is 32 (keeping msb as 1).
-2. Once the above script ends, run `generate_template.py` to create the template dataset.
+1. Open a terminal. Run the shell script `script_template.sh` to build the templates. In our experiments, we consider the most significant bit (msb) to be 1 and build templates for 6 msbs. Therefore total number of templates built is 32 (keeping msb as 1). The script executes a spy process (which measures timing leakage using RASSLE) and a victim process (which is performing EC scalar multiplication) in a completely asynchronous setup under the influence of deadline-scheduler. The timing information observed by the spy is logged into text files by the name `filename_<count>.txt` where count varies from `100000` to `111111`.
+2. Once the above script ends, run `generate_template.py` to create the template dataset. The python script reads the timing files created in the earlier step and processes them further to create the dataset. The dataset is saved in the root folder by the name `rassle_timing_dataset.npy` as a numpy array.
 
 ### Template Matching
 
-1. Open `ecc_encrypt.c` in a text editor. Comment out line 66. During template building phase, we varied the 6 msbs while keeping the remaining bits same. But, during the matching phase, the nonces are generated at random. So all the 256 bits of the nonce are used as input in this case.
-2. Run the shell script `script_nonce.sh` to generate the datasets containing timing values obtained through RASSLE. The script reads from a file containing random nonces and performs EC scalar multiplication using those nonces. 
-3. Once the above script ends, run `template_matching.py` to retrieve the candidate "partial nonces" using Least Square Error method. The python script will also print the number of nonces correctly predicted.
+1. Open `ecc_encrypt.c` in a text editor. Comment out line 66 and save the file. During template building phase, we varied the 6 msbs while keeping the remaining bits same. But, during the matching phase, the nonces are generated at random. So all the 256 bits of the nonce are used as input in this case.
+2. Open a terminal. Run the shell script `script_nonce.sh` to generate the datasets containing timing values obtained through RASSLE (similar to the template building phase). The script reads from a file containing random nonces and performs EC scalar multiplication using those nonces. The timing information observed by the spy is logged into text files by the name `filename_tst_<count>.txt` where count represents number of nonces used.
+3. Once the above script ends, run `template_matching.py` to retrieve the candidate "partial nonces" using Least Square Error method. The python script reads the numpy array created during the building phase and compute medians for each bit of nonce in the timing dataset. These medians will act as representative templates 
+will also print the number of nonces correctly predicted.
 4. Using these "partial nonces", the original secret signing key can be revealed using the well-known Lattice Attack.
