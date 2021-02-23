@@ -19,7 +19,7 @@ The attack utilizes the deadline scheduler to achieve synchronization between th
 ### Setting up OpenSSL
 The demo requires OpenSSL library to be installed in the system. A sample OpenSSL repository has been included with this repo. 
 In order to install the specific version of OpenSSL -  
-1. untar or extract `OpenSSL-1.1.1g-RASSLE.tar.xz`. 
+1. Untar or extract `OpenSSL-1.1.1g-RASSLE.tar.xz`. 
 2. `cd` into the extracted directory and configure it using `./config`.
 3. Once the library has been configured for the system, execute `make` to build all the necessary files.
 4. After the build is complete, complete the installation by executing `sudo make install`. This version of OpenSSL will be installed in `/usr/local/lib`.
