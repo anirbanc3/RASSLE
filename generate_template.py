@@ -43,7 +43,7 @@ if __name__ == "__main__":
     for i in range(keys):
         filetiming = []; 
         for j in range(numberOfFiles):
-            filename_timing = 'RASSLE/filetiming_'+str(128+(i * 4))+'_'+str(j+1)+'.txt'
+            filename_timing = 'filetiming_'+str(128+(i * 4))+'_'+str(j+1)+'.txt'
             raw_timing = openfile(filename_timing, 'timing')
             mont_start_time = filecount[i*numberOfFiles +  j]
             for index, item in enumerate(raw_timing):
@@ -59,13 +59,21 @@ if __name__ == "__main__":
         print(i)
         dataset.append(filetiming)
     
+    minimum = numberOfFiles
+  
     for k in dataset:
-        if (len(k) == 10000):
-            del k[len(k) - 1] 
-        if (len(k) == 9999):
-            del k[len(k) - 2] 
+        if (len(k) < minimum):
+            minimum = len(k)
             
-    np.save('rassle_timing_dataset.npy', np.array(dataset))
+    pruned_dataset = [[0 for j in range(minimum)] for i in range(keys)]
+    for i, item in enumerate(dataset):
+        for j, val in enumerate(item):
+            if (j < minimum):
+                pruned_dataset[i][j] = val
+                
+    print(minimum)
+            
+    np.save('rassle_timing_dataset.npy', np.array(pruned_dataset))
     
 
 
