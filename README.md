@@ -16,7 +16,15 @@ The attack utilizes the deadline scheduler to achieve synchronization between th
 
 ## Pre-requisites
 
-The demo requires OpenSSL library to be installed in the system. 
+### Setting up OpenSSL
+The demo requires OpenSSL library to be installed in the system. A sample OpenSSL repository has been included with this repo. 
+In order to install the specific version of OpenSSL -  
+1. untar or extract `OpenSSL-1.1.1g-RASSLE.tar.xz`. 
+2. `cd` into the extracted directory and configure it using `./config`.
+3. Once the library has been configured for the system, execute `make` to build all the necessary files.
+4. After the build is complete, complete the installation by executing `sudo make install`. This version of OpenSSL will be installed in `/usr/local/lib`.
+
+
 
 ### Setting up the deadline scheduler
 
@@ -36,6 +44,7 @@ The attack works in two phases - template building and template matching
 
 1. Open a terminal. Run the shell script `script_template.sh` to build the templates. In our experiments, we consider the most significant bit (msb) to be 1 and build templates for 6 msbs. Therefore total number of templates built is 32 (keeping msb as 1). The script executes a spy process (which measures timing leakage using RASSLE) and a victim process (which is performing EC scalar multiplication) in a completely asynchronous setup under the influence of deadline-scheduler. The timing information observed by the spy is logged into text files by the name `filename_<nonce>_<count>.txt` where nonce varies from `100000` to `111111` (in decimal) and count varies from 1 to 10,000.
 2. Once the above script ends, run `generate_template.py` to create the template dataset. The python script reads the timing files created in the earlier step and processes them further to create the dataset. The dataset is saved in the root folder by the name `rassle_timing_dataset.npy` as a numpy array.
+3. Delete the file named `file_mont_ladder.txt` using the command `rm file_mont_ladder.txt`. This step is important for the attack to be successful.
 
 ### Template Matching
 
