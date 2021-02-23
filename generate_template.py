@@ -38,7 +38,7 @@ if __name__ == "__main__":
 
     dataset = []
 
-    filename_mont = 'RASSLE/file_mont_ladder.txt'
+    filename_mont = 'file_mont_ladder.txt'
     filecount = openfile(filename_mont, 'mont')
     for i in range(keys):
         filetiming = []; 
