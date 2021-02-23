@@ -81,9 +81,9 @@ for i in range(500):
     raw_timing = openfile(filename, 'timing')
     for index, item in enumerate(raw_timing):
         if (item[0] > mont_start_time[i + 100]):
-#            print(item[0])
-            sample_timing.append([raw_timing[index - 1][2], raw_timing[index][2], raw_timing[index + 1][2], raw_timing[index + 2][2], raw_timing[index + 3][2], raw_timing[index + 4][2], raw_timing[index + 5][2]])
-            break
+            if ((index + 5) < len(raw_timing)):
+                sample_timing.append([raw_timing[index - 1][2], raw_timing[index][2], raw_timing[index + 1][2], raw_timing[index + 2][2], raw_timing[index + 3][2], raw_timing[index + 4][2], raw_timing[index + 5][2]])
+                break
 
 rank_holder = []; key_holder = []
 for i in range(500):
@@ -117,9 +117,7 @@ for i in range(500):
     outlist = sorted(outlist,key=itemgetter(1))
     key_holder.append(outlist[0:5])
     
- 
-  
-   
+    
     for index, item in enumerate(outlist):
         if (item[0] ==  correct_index):
             print(index, item)
