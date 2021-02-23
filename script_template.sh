@@ -1,7 +1,7 @@
 #!/bin/bash
 
 gcc -o ras2 ras_attack.c -w
-gcc -o ecc ecc_encrypt.c -w -lcrypto
+gcc -o ecc ecc_encrypt.c -w -L/usr/local/lib -lcrypto
 
 dec=128
 
