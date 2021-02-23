@@ -68,7 +68,7 @@ for j in range(keys):
     third_temp.append(median_third)
         
 
-mont_start_time = openfile('RASSLE/file_mont_ladder.txt', 'count')
+mont_start_time = openfile('file_mont_ladder.txt', 'count')
 with open('sample_nonces.txt', 'r') as f:
     file = f.readlines() 
     
@@ -77,7 +77,7 @@ nonces = list(map(lambda each:each.strip("\n"), file))
 
 sample_timing = [] 
 for i in range(500):
-    filename = 'RASSLE/filetiming_tst_'+str(i + 100)+'.txt'
+    filename = 'filetiming_tst_'+str(i + 100)+'.txt'
     raw_timing = openfile(filename, 'timing')
     for index, item in enumerate(raw_timing):
         if (item[0] > mont_start_time[i + 100]):
