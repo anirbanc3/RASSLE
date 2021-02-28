@@ -34,7 +34,7 @@ def openfile(filename, flag):
         return parse_filecount(file)
 
 
-numberOfFiles = 196; keys = 32;
+numberOfFiles = 500; keys = 32;
 
 template = np.load('rassle_timing_dataset.npy')
 mean_temp = np.mean(template, axis=1)
@@ -76,18 +76,18 @@ with open('sample_nonces.txt', 'r') as f:
 nonces = list(map(lambda each:each.strip("\n"), file))
 
 sample_timing = [] 
-for i in range(500):
-    filename = 'filetiming_tst_'+str(i + 100)+'.txt'
+for i in range(600):
+    filename = 'filetiming_tst_'+str(i)+'.txt'
     raw_timing = openfile(filename, 'timing')
     for index, item in enumerate(raw_timing):
-        if (item[0] > mont_start_time[i + 100]):
+        if (item[0] > mont_start_time[i]):
             if ((index + 5) < len(raw_timing)):
                 sample_timing.append([raw_timing[index - 1][2], raw_timing[index][2], raw_timing[index + 1][2], raw_timing[index + 2][2], raw_timing[index + 3][2], raw_timing[index + 4][2], raw_timing[index + 5][2]])
                 break
 
 rank_holder = []; key_holder = []
-for i in range(500):
-    key = nonces[i + 100]    
+for i in range(numberOfFiles):
+    key = nonces[i]    
     keybyte = key[0:2]
     keybyte_in_bin = str("{0:08b}".format(int(keybyte, 16)) )
     key_six_msb = keybyte_in_bin[0:6]
@@ -127,7 +127,7 @@ for i in range(500):
 count = len([i for i in rank_holder if i < 5]) 
 print(count)
             
-nonce_candidates = [[0 for n in range(5)] for m in range(500)]
+nonce_candidates = [[0 for n in range(5)] for m in range(numberOfFiles)]
 for i, keys in enumerate(key_holder):
     for j, item in enumerate(keys):
         nonce_candidates[i][j] = key_bin_pair[item[0]]
