@@ -40,7 +40,7 @@ To acquire the required privilege, execute the following command `sudo setcap ca
 
 The command to run an `<executable>` using deadline scheduler is as follows:
   `chrt -d --sched-runtime t1 --sched-deadline t2 --sched-period t3 0 <executable>`
-For this work, we set t1 with the approximate time (in nanoseconds) rerquired to execute one iteration of ECC Montgomery ladder. Further, we set the parameter sched-deadline to a value t2 = t1 + δ such that the ECC process leaves the CPU after execution of a single Montgomery ladder iteration. We set the parameter sched-period to a value t3 = 2 × t1. 
+For this work, we set t1 with the approximate time (in nanoseconds) required to execute one iteration of ECC Montgomery ladder. Further, we set the parameter sched-deadline to a value t2 = t1 + δ such that the ECC process leaves the CPU after execution of a single Montgomery ladder iteration. We set the parameter sched-period to a value t3 = 2 × t1. 
 
 ## How to run the demo
 
