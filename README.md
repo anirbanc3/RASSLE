@@ -13,6 +13,7 @@ The attack utilizes the deadline scheduler to achieve synchronization between th
   - sched-period -> 7200
 - Return Address Stack (RAS) size - 16
 - OpenSSL version – 1.1.1g
+- linux-util version - 2.31 
 
 ## Pre-requisites
 
@@ -23,6 +24,7 @@ In order to install the specific version of OpenSSL -
 2. `cd` into the extracted directory and configure it using `./config`.
 3. Once the library has been configured for the system, execute `make` to build all the necessary files.
 4. After the build is complete, complete the installation by executing `sudo make install`. This version of OpenSSL will be installed in `/usr/local/lib`.
+5. [optional] Run `sudo ldconfig` in case the installation is not successful after the end of previous step (step 4).
 
 
 
@@ -30,11 +32,15 @@ In order to install the specific version of OpenSSL -
 
 Most Linux-based operating systems offer a number of scheduling policies, which are crucial artifacts for controlling two asynchronous processes' execution. Among the available policies, the deadline scheduler is particularly interesting because it imposes a "deadline" on operations to prevent starvation of processes. In the deadline scheduler, each request by a process to access a system resource has an expiration time. A process holding a system resource does not need to be forcefully preempted, as the deadline scheduler automatically preempts it from the CPU after its request expiration time.
 
-In order to inspect the underline scheduler in the working system one can use `cat /sys/block/sda/queue/scheduler`.
-The operation of deadline scheduler depends on three parameters, namely 'runtime', 'period', and 'deadline'. These parameters can be adjusted using `chrt` command, which can be executed from user-level privilege by acquiring `CAP_SYS_NICE` permission. The permission can be provided to a user using `setcap cap_sys_nice+ep /usr/bin/chrt`.
+In order to inspect the underline scheduler in the working system, run `cat /sys/block/sda/queue/scheduler`. The attack will work only if deadline scheduler is present (it does not have to be the default scheduler).
+
+The operation of deadline scheduler depends on three parameters, namely 'runtime', 'period', and 'deadline'. These parameters can be adjusted using `chrt` command, which can be executed from user-level privilege by acquiring `CAP_SYS_NICE` permission. 
+
+To acquire the required privilege, execute the following command `sudo setcap cap_sys_nice+ep /usr/bin/chrt`.
+
 The command to run an `<executable>` using deadline scheduler is as follows:
   `chrt -d --sched-runtime t1 --sched-deadline t2 --sched-period t3 0 <executable>`
-We set t1 with the obtained value in nanoseconds. Further, we set the parameter sched-deadline to a value t2 = t1 + δ such that the ECC process leaves the CPU after execution of a single Montgomery ladder iteration. We set the parameter sched-period to a value t3 = 2 × t1. 
+For this work, we set t1 with the approximate time (in nanoseconds) rerquired to execute one iteration of ECC Montgomery ladder. Further, we set the parameter sched-deadline to a value t2 = t1 + δ such that the ECC process leaves the CPU after execution of a single Montgomery ladder iteration. We set the parameter sched-period to a value t3 = 2 × t1. 
 
 ## How to run the demo
 
